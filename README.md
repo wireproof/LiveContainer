@@ -13,6 +13,22 @@ Crowdin Project: [![Crowdin](https://badges.crowdin.net/livecontainer/localized.
 
 # LiveContainer
 
+## Wireproof Duo build
+
+This fork's `duo-sdk27.1` branch preserves the LiveContainer 3.8.11 source at upstream commit `9108ae6` and changes the GitHub build workflow from Xcode 26.2 to Xcode 27.1. It is an independent build, not an upstream release.
+
+The host was built locally with Xcode 27.1 / iPhoneOS SDK 27.1. The user reported that the rebuilt host resolved the scaled compatibility layout on their iPhone Duo. This does not guarantee that every guest app or injected tweak handles the Duo layout correctly; the separate TikTok button-position patch is not part of this repository.
+
+To build locally, install Xcode 27.1, initialize the repository submodules, and run:
+
+```sh
+git submodule update --init --recursive
+xcodebuild -project LiveContainer.xcodeproj -scheme LiveContainer -configuration Release -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build CODE_SIGNING_ALLOWED=NO build
+```
+
+GitHub Actions requires a hosted runner with Xcode 27.1 installed. The workflow change has not yet been validated on a GitHub-hosted runner. Sideloading requires signing the resulting app with your own account.
+
+
 - LiveContainer is an app launcher (not emulator or hypervisor) that allows you to run iOS apps inside it.
 - Allows you to install unlimited apps (3 app/10 app id free developer account limit does not apply here) with only one app & app id. You can also have multiple versions of an app installed with multiple data containers.
 - (Below iOS 26) When JIT is available, codesign is entirely bypassed, no need to sign your apps before installing. Otherwise, your app will be signed with the same certificate used by LiveContainer.

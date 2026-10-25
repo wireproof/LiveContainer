@@ -26,7 +26,7 @@ git submodule update --init --recursive
 xcodebuild -project LiveContainer.xcodeproj -scheme LiveContainer -configuration Release -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build CODE_SIGNING_ALLOWED=NO build
 ```
 
-GitHub Actions requires a hosted runner with Xcode 27.1 installed. The workflow change has not yet been validated on a GitHub-hosted runner. Sideloading requires signing the resulting app with your own account.
+GitHub Actions requires a hosted runner with Xcode 27.1 installed. The first hosted run failed during Xcode selection on October 25, 2026: `macos-latest` offered up to Xcode 26.6, not 27.1. The workflow is manual-only until a compatible runner is available, preventing automatic failed runs on pushes and release tags. The published IPA was built locally; this CI limitation does not invalidate that artifact. Sideloading requires signing the resulting app with your own account.
 
 
 - LiveContainer is an app launcher (not emulator or hypervisor) that allows you to run iOS apps inside it.
